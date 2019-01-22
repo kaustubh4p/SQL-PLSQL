@@ -1,0 +1,9 @@
+Write a SQL query to fetch employee names having salary greater than or equal to 5000 and less than or equal 10000
+
+- SELECT FullName FROM EmployeeDetails WHERE EmpId IN (SELECT EmpId FROM EmpolyeeSalary WHERE Salary BETWEEN 5000 AND 10000);
+
+Write a SQL query to fetch project-wise count of employees sorted by project's count in descending order
+
+- SELECT Project, count(EmpId) EmpProjectCount FROM EmployeeSalary 
+GROUP BY Project 
+ORDER BY EmpProjectCount DESC;
