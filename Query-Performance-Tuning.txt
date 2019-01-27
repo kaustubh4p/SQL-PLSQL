@@ -1,0 +1,55 @@
+Prefer to use views and stored procedures in spite of writing long queries. It’ll also help in minimizing network load
+It’s better to introduce constraints instead of triggers. They are more efficient than triggers and can increase performance
+Make use of table-level variables instead of temporary tables
+The UNION ALL clause responds faster than UNION. It doesn’t look for duplicate rows whereas the UNION statement does that regardless of whether they exist or not.
+Prevent the usage of DISTINCT and HAVING clauses.
+Avoid excessive use of SQL cursors.
+
+To find issue:
+
+Profiler
+Query Execution plan
+SQL tuning advisor
+
+
+
+What is Performance Tuning?
+Making optimal use of system using existing resources called performace tuning.
+
+Types of Tunings?
+1. CPU Tuning
+2. Memory Tuning
+3. IO Tuning
+4. Application Tuning
+5. Database Tuning
+
+What is the fastest query method for a table?
+Fetch by rowid
+
+Proactive tuning
+Reactive tuning
+
+
+What are advantages of Indexes?
+
+It allows faster retrieval of data
+Indexes always speeds up the select statement.
+Always create indexes on primary keys/foreign keys.
+This is because primary keys and foreign keys are frequently used to join tables
+
+What are disadvantages of Indexes?
+
+Indexes slows down the performance of insert and update statements.So always we need follow best practice of disabling indexes before insert and update the table
+Indexes takes additional disk space
+
+What is mean by implicit index
+Whenever we define unique key or primary key constraints on the table  the index will automatically create on the table.These indexes are known as implicit indexes
+
+What are Explicit Indexes?
+The indexes which is created by user are called as explicit indexes
+
+What is composite index
+
+When 2 or more columns are related to each other in the table and the same columns are used in where condition of the query then user can create index on both columns.These indexes are known as composite indexes.
+
+Create index CI_Employee on Employee(Eno,Deptno);

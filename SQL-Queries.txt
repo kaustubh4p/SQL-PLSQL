@@ -7,3 +7,40 @@ Write a SQL query to fetch project-wise count of employees sorted by project's c
 - SELECT Project, count(EmpId) EmpProjectCount FROM EmployeeSalary 
 GROUP BY Project 
 ORDER BY EmpProjectCount DESC;
+
+How do i fetch only common records between 2 tables
+
+Select * from Employee;
+Intersect
+Select * from Employee1;
+
+How to get distinct records from the table without using distinct keyword.
+select * from Employee a where  rowid = (select max(rowid) from Employee b where  a.Employee_no=b.Employee_no); 	
+
+
+How Can i create table with same structure with data of Employee table?
+Create table Employee1 as select * from Employee;
+
+.Display first 50% records from Employee table?
+select rownum,s.* from sales s where rownum <=( select count(*)/2 from sales);
+
+Select rownum,E.* from Employee E
+minus
+Select rownum,E.* from Employee E where rownum<=(Select count(*)/2 from Employee);
+
+How to Display Even rows in Employee table?
+Select * from(Select rownum as rno,E.* from Employee) where Mod(rno,2)=0;
+
+How to Display Odd rows in Employee table?
+Select * from(Select rownum as rno,E.* from Employee E) where Mod(rno,2)=1;
+
+How to get 3 Highest salaries records from Employee table?
+select distinct salary from employee a where 3 >= (select count(distinct salary) from emp loyee b where a.salary <= b.salary) order by a.salary desc;
+
+select distinct order_id from sales where rownum <4 order by order_id desc;
+
+What is Query to display Nth Record from Employee table?
+Select * from Employee  where rownum = &n;
+
+What is the Query to fetch last record from the table?
+Select * from Employee where Rowid= select max(Rowid) from Employee;
