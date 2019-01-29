@@ -44,3 +44,84 @@ Select * from Employee  where rownum = &n;
 
 What is the Query to fetch last record from the table?
 Select * from Employee where Rowid= select max(Rowid) from Employee;
+
+Write a SQL query to fetch employee names having salary greater than or equal to 5000 and less than or equal 10000
+
+- SELECT FullName FROM EmployeeDetails WHERE EmpId IN (SELECT EmpId FROM EmpolyeeSalary WHERE Salary BETWEEN 5000 AND 10000);
+
+Write a SQL query to fetch project-wise count of employees sorted by project's count in descending order
+
+- SELECT Project, count(EmpId) EmpProjectCount FROM EmployeeSalary GROUP BY Project ORDER BY EmpProjectCount DESC;
+
+Write SQL query to find the nth highest salary from table without using TOP/limit keyword
+
+- SELECT Salary FROM EmployeeSalary Emp1 WHERE N-1 = (
+                SELECT COUNT( DISTINCT ( Emp2.Salary ) )
+                FROM EmployeeSalary Emp2
+                WHERE Emp2.Salary > Emp1.Salary
+            )
+
+Using LIMIT
+			
+SELECT Salary FROM Employee ORDER BY Salary DESC LIMIT N-1,1; (mySQL)
+
+Write a SQL query to fetch top n records ?
+
+- SELECT * FROM EmployeeSalary ORDER BY Salary DESC LIMIT N (mySQL)
+- SELECT * FROM (SELECT * FROM EmployeeSalary ORDER BY Salary DESC) WHERE ROWNUM <= 3;
+
+Write a SQL query to fetch all the Employees details from EmployeeDetails table who joined in Year 2016.
+
+SELECT * FROM EmployeeDetails WHERE DateOfJoining BETWEEN '01-01-2016' AND date '31-12-2016'; (Oracle)
+SELECT * FROM EmployeeDetails WHERE YEAR(DateOfJoining) = '2016'; (MYSQL)
+
+
+Write a SQL query to find current date-time
+
+SELECT NOW(); - MYSQL
+SELECT SYSDATE FROM DUAL; - Oracle
+
+Write a SQL query to fetch records that are present in one table but not in another table
+
+SELECT * FROM EmployeeSalary
+MINUS
+SELECT * FROM ManagerSalary
+
+Write a SQL query to fetch common records between two tables
+
+SELECT * FROM EmployeeSalary
+INTERSECT
+SELECT * FROM ManagerSalary
+
+Write a SQL query to create an empty table with same structure as some other table
+
+SELECT * INTO newTable FROM EmployeeDetails WHERE 1 = 0;
+CREATE TABLE newTable LIKE EmployeeDetails (MYSQL)
+
+Write a SQL query to fetch only even rows from table.
+
+	SELECT E.EmpId, E.Project, E.Salary FROM (SELECT *, Row_Number() OVER(ORDER BY EmpId) AS RowNumber FROM EmployeeSalary ) E WHERE E.RowNumber % 2 = 0
+
+	select count(*) from (select s.*,rownum as row1 from user_last_login s) where mod(row1,2)=0;
+
+Write a SQL query to fetch only odd rows from table.
+
+	SELECT E.EmpId, E.Project, E.Salary FROM (SELECT *, Row_Number() OVER(ORDER BY EmpId) AS RowNumber FROM EmployeeSalary ) E WHERE E.RowNumber % 2 = 1
+
+Write a SQL query to remove duplicates from a table without using temporary table
+	DELETE FROM EmployeeSalary WHERE EmpId IN (SELECT EmpId FROM EmployeeSalary GROUP BY Project, Salary HAVING COUNT(*) > 1));
+
+Write a SQL query to fetch duplicate records from a table
+	SELECT EmpId, Project, Salary, COUNT(*) FROM EmployeeSalary GROUP BY EmpId, Project, Salary HAVING COUNT(*) > 1;
+	
+Write a SQL query to fetch all employee records from EmployeeDetails table who have a salary record in EmployeeSalary table.
+	SELECT * FROM EmployeeDetails E WHERE EXISTS (SELECT * FROM EmployeeSalary S WHERE  E.EmpId = S.EmpId);	
+	
+Write a SQL query to fetch all the Employees who are also managers from EmployeeDetails table
+	SELECT DISTINCT E.FullName FROM EmpDetails E INNER JOIN EmpDetails M ON E.EmpID = M.ManagerID;
+
+Write a query to fetch employee names and salary records. Return employee details even if the salary record is not present for the employee
+	SELECT E.FullName, S.Salary  FROM EmployeeDetails E LEFT JOIN EmployeeSalary S ON E.EmpId = S.EmpId;
+	
+Write a SQL query to fetch project-wise count of employees sorted by project's count in descending order
+	SELECT Project, count(EmpId) EmpProjectCount FROM EmployeeSalary GROUP BY Project ORDER BY EmpProjectCount DESC;
